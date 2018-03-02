@@ -12,6 +12,5 @@ public class element {
 	public element(String Elemvalue) {
 		value = Elemvalue;
 		next = null;
-		//System.out.println("Element ajouté, value : " + value);
 	}
 }

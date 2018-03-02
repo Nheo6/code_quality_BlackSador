@@ -17,7 +17,7 @@ public class linkedList {
 			item.next = this.first;
 			this.first = item;
 		}
-		size++;
+		this.size++;
 	}
 	
 	void	addBackElement(String elem) {
@@ -33,7 +33,7 @@ public class linkedList {
 			iterator = iterator.next;
 		
 		iterator.next = item;
-		size++;
+		this.size++;
 	}
 	
 	void	addElementAtPosition(String elem, int pos) {
@@ -58,7 +58,7 @@ public class linkedList {
 		
 		previousIterator.next = item;
 		item.next = iterator;
-		size++;
+		this.size++;
 	}
 	
 	void	removeElementAtPosition(int pos) {
@@ -66,12 +66,12 @@ public class linkedList {
 		element previousIterator = this.first;
 		int	counter = 0;
 		
-		if (size == 0)
+		if (this.size == 0)
 			return;
 		
-		if (size == 1) {
+		if (this.size == 1) {
 			first = null;
-			size = 0;
+			this.size = 0;
 			return;	
 		}
 		
@@ -86,11 +86,90 @@ public class linkedList {
 		}
 		
 		previousIterator.next = iterator.next;
-		size--;
+		this.size--;
+	}
+	
+	void	removeElement(String elemToRemove) {
+		element iterator = this.first;
+		element previousIterator = this.first;
+	
+		if (this.size == 0)
+			return;
+		
+		for (int i = 0; i < this.size; i++) {
+			if (iterator.getValue().equals(elemToRemove)) {
+				if (i == 0)
+					this.first = this.first.next;
+				else
+					previousIterator.next = iterator.next;
+				this.size--;
+				return;
+			}
+			if (iterator.next == null)
+				return;
+			previousIterator = iterator;
+			iterator = iterator.next;
+		}
+	}
+	
+	String	getFront() {
+		if (this.size == 0)
+			return "";
+		else
+			return (first.getValue());
+	}
+	
+	String	getBack() {
+		if (this.size == 0)
+			return "";
+		
+		element iterator = this.first;
+		
+		while (iterator.next != null) {
+			iterator = iterator.next;
+		}
+		return (iterator.getValue());
+	}
+	
+	String getElementAtPosition(int pos) {
+		if (this.size == 0)
+			return "";
+		if (pos <= 0)
+			return first.getValue();
+		
+		element iterator = this.first;
+		
+		for (int i = 0; i < pos; i++) {
+			if (iterator.next == null)
+				return iterator.getValue();
+			iterator = iterator.next;
+		}
+		
+		return iterator.getValue();
+	}
+	
+	int	getPositionOfElement(String elem) {
+		if (this.size == 0)
+			return -1;
+		
+		int	position = 0;
+		element iterator = this.first;
+		
+		while (iterator.next != null) {
+			if (iterator.getValue().equals(elem)) {
+				return position;
+			}
+			iterator = iterator.next;
+			position++;
+		}
+		return position;
 	}
 	
 	public void	displayList() {
 		element iterator = this.first;
+		
+		if (iterator == null)
+			return;
 		
 		while (iterator.next != null) {
 			System.out.println(iterator.getValue());
@@ -99,6 +178,9 @@ public class linkedList {
 		System.out.println(iterator.getValue());
 	}
 	
+	public int	getSize() {
+		return this.size;
+	}
 	public linkedList() {
 		size = 0;
 	}
